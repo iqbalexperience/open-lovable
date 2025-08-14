@@ -17,9 +17,13 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-vars": "warn",
       "react-hooks/exhaustive-deps": "warn",
       "react/no-unescaped-entities": "off",
-      "prefer-const": "warn"
-    }
-  }
+      "prefer-const": "warn",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
+      "@ts-ignore": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

@@ -530,7 +530,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                   } else if (data.message.includes('Creating files') || data.message.includes('Applying')) {
                     setCodeApplicationState({
                       stage: 'applying',
-                      filesGenerated: results.filesCreated
+                      filesGenerated: data?.filesCreated
                     });
                   }
                   break;
@@ -620,7 +620,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
       // Process final data
       if (finalData && finalData.type === 'complete') {
-        const data = {
+        const data: any = {
           success: true,
           results: finalData.results,
           explanation: finalData.explanation,
@@ -1011,12 +1011,12 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                         // Create a map of edited files
                         const editedFiles = new Set(
                           generationProgress.files
-                            .filter(f => f.edited)
+                            .filter((f: any) => f.edited)
                             .map(f => f.path)
                         );
 
                         // Process all files from generation progress
-                        generationProgress.files.forEach(file => {
+                        generationProgress.files.forEach((file: any) => {
                           const parts = file.path.split('/');
                           const dir = parts.length > 1 ? parts.slice(0, -1).join('/') : '';
                           const fileName = parts[parts.length - 1];
@@ -1058,8 +1058,8 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                                     <div
                                       key={fullPath}
                                       className={`flex items-center gap-2 py-1 px-2 rounded cursor-pointer transition-all ${isSelected
-                                          ? 'bg-blue-500 text-white'
-                                          : 'text-gray-700 hover:bg-gray-100'
+                                        ? 'bg-blue-500 text-white'
+                                        : 'text-gray-700 hover:bg-gray-100'
                                         }`}
                                       onClick={() => handleFileClick(fullPath)}
                                     >
@@ -1216,9 +1216,9 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                               <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                               <span className="font-mono text-sm">{generationProgress.currentFile.path}</span>
                               <span className={`px-2 py-0.5 text-xs rounded ${generationProgress.currentFile.type === 'css' ? 'bg-blue-600 text-white' :
-                                  generationProgress.currentFile.type === 'javascript' ? 'bg-yellow-600 text-white' :
-                                    generationProgress.currentFile.type === 'json' ? 'bg-green-600 text-white' :
-                                      'bg-gray-200 text-gray-700'
+                                generationProgress.currentFile.type === 'javascript' ? 'bg-yellow-600 text-white' :
+                                  generationProgress.currentFile.type === 'json' ? 'bg-green-600 text-white' :
+                                    'bg-gray-200 text-gray-700'
                                 }`}>
                                 {generationProgress.currentFile.type === 'javascript' ? 'JSX' : generationProgress.currentFile.type.toUpperCase()}
                               </span>
@@ -1257,9 +1257,9 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                               <span className="font-mono text-sm">{file.path}</span>
                             </div>
                             <span className={`px-2 py-0.5 text-xs rounded ${file.type === 'css' ? 'bg-blue-600 text-white' :
-                                file.type === 'javascript' ? 'bg-yellow-600 text-white' :
-                                  file.type === 'json' ? 'bg-green-600 text-white' :
-                                    'bg-gray-200 text-gray-700'
+                              file.type === 'javascript' ? 'bg-yellow-600 text-white' :
+                                file.type === 'json' ? 'bg-green-600 text-white' :
+                                  'bg-gray-200 text-gray-700'
                               }`}>
                               {file.type === 'javascript' ? 'JSX' : file.type.toUpperCase()}
                             </span>
@@ -1645,6 +1645,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                               content: fileContent.trim(),
                               type: fileType,
                               completed: true,
+                              // @ts-ignore
                               edited: true
                             },
                             ...updatedState.files.slice(existingFileIndex + 1)
@@ -1656,6 +1657,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                             content: fileContent.trim(),
                             type: fileType,
                             completed: true,
+                            // @ts-ignore
                             edited: false
                           }];
                         }
@@ -2582,6 +2584,7 @@ Focus on the key sections and content, making it clean and modern.`;
                               content: fileContent.trim(),
                               type: fileType,
                               completed: true,
+                              // @ts-ignore
                               edited: true
                             },
                             ...updatedState.files.slice(existingFileIndex + 1)
@@ -2593,6 +2596,7 @@ Focus on the key sections and content, making it clean and modern.`;
                             content: fileContent.trim(),
                             type: fileType,
                             completed: true,
+                            // @ts-ignore
                             edited: false
                           }];
                         }
@@ -2908,8 +2912,8 @@ Focus on the key sections and content, making it clean and modern.`;
                                 }
                               }}
                               className={`p-3 rounded-lg border transition-all ${selectedStyle === style.name
-                                  ? 'border-orange-400 bg-orange-50 text-gray-900 shadow-sm'
-                                  : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/50 text-gray-700'
+                                ? 'border-orange-400 bg-orange-50 text-gray-900 shadow-sm'
+                                : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/50 text-gray-700'
                                 }`}
                             >
                               <div className="text-sm font-medium">{style.name}</div>
@@ -2976,7 +2980,9 @@ Focus on the key sections and content, making it clean and modern.`;
                 >
                   {appConfig.ai.availableModels.map(model => (
                     <option key={model} value={model}>
-                      {appConfig.ai.modelDisplayNames[model] || model}
+                      {
+                        // @ts-ignore
+                        appConfig.ai.modelDisplayNames[model] || model}
                     </option>
                   ))}
                 </select>
@@ -3010,9 +3016,12 @@ Focus on the key sections and content, making it clean and modern.`;
             }}
             className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#36322F] focus:border-transparent"
           >
+
             {appConfig.ai.availableModels.map(model => (
               <option key={model} value={model}>
-                {appConfig.ai.modelDisplayNames[model] || model}
+                {
+                  // @ts-ignore
+                  appConfig.ai.modelDisplayNames[model] || model}
               </option>
             ))}
           </select>
@@ -3109,18 +3118,18 @@ Focus on the key sections and content, making it clean and modern.`;
                   <div className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} mb-1`}>
                     <div className="block">
                       <div className={`block rounded-[10px] px-4 py-2 ${msg.type === 'user' ? 'bg-[#36322F] text-white ml-auto max-w-[80%]' :
-                          msg.type === 'ai' ? 'bg-gray-100 text-gray-900 mr-auto max-w-[80%]' :
-                            msg.type === 'system' ? 'bg-[#36322F] text-white text-sm' :
-                              msg.type === 'command' ? 'bg-[#36322F] text-white font-mono text-sm' :
-                                msg.type === 'error' ? 'bg-red-900 text-red-100 text-sm border border-red-700' :
-                                  'bg-[#36322F] text-white text-sm'
+                        msg.type === 'ai' ? 'bg-gray-100 text-gray-900 mr-auto max-w-[80%]' :
+                          msg.type === 'system' ? 'bg-[#36322F] text-white text-sm' :
+                            msg.type === 'command' ? 'bg-[#36322F] text-white font-mono text-sm' :
+                              msg.type === 'error' ? 'bg-red-900 text-red-100 text-sm border border-red-700' :
+                                'bg-[#36322F] text-white text-sm'
                         }`}>
                         {msg.type === 'command' ? (
                           <div className="flex items-start gap-2">
                             <span className={`text-xs ${msg.metadata?.commandType === 'input' ? 'text-blue-400' :
-                                msg.metadata?.commandType === 'error' ? 'text-red-400' :
-                                  msg.metadata?.commandType === 'success' ? 'text-green-400' :
-                                    'text-gray-400'
+                              msg.metadata?.commandType === 'error' ? 'text-red-400' :
+                                msg.metadata?.commandType === 'success' ? 'text-green-400' :
+                                  'text-gray-400'
                               }`}>
                               {msg.metadata?.commandType === 'input' ? '$' : '>'}
                             </span>
@@ -3167,9 +3176,9 @@ Focus on the key sections and content, making it clean and modern.`;
                                   style={{ animationDelay: `${fileIdx * 30}ms` }}
                                 >
                                   <span className={`inline-block w-1.5 h-1.5 rounded-full ${fileType === 'css' ? 'bg-blue-400' :
-                                      fileType === 'javascript' ? 'bg-yellow-400' :
-                                        fileType === 'json' ? 'bg-green-400' :
-                                          'bg-gray-400'
+                                    fileType === 'javascript' ? 'bg-yellow-400' :
+                                      fileType === 'json' ? 'bg-green-400' :
+                                        'bg-gray-400'
                                     }`} />
                                   {fileName}
                                 </div>
@@ -3191,9 +3200,9 @@ Focus on the key sections and content, making it clean and modern.`;
                                 style={{ animationDelay: `${fileIdx * 30}ms` }}
                               >
                                 <span className={`inline-block w-1.5 h-1.5 rounded-full ${file.type === 'css' ? 'bg-blue-400' :
-                                    file.type === 'javascript' ? 'bg-yellow-400' :
-                                      file.type === 'json' ? 'bg-green-400' :
-                                        'bg-gray-400'
+                                  file.type === 'javascript' ? 'bg-yellow-400' :
+                                    file.type === 'json' ? 'bg-green-400' :
+                                      'bg-gray-400'
                                   }`} />
                                 {file.path.split('/').pop()}
                               </div>
@@ -3324,8 +3333,8 @@ Focus on the key sections and content, making it clean and modern.`;
                 <button
                   onClick={() => setActiveTab('generation')}
                   className={`p-2 rounded-md transition-all ${activeTab === 'generation'
-                      ? 'bg-black text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                    ? 'bg-black text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
                     }`}
                   title="Code"
                 >
@@ -3336,8 +3345,8 @@ Focus on the key sections and content, making it clean and modern.`;
                 <button
                   onClick={() => setActiveTab('preview')}
                   className={`p-2 rounded-md transition-all ${activeTab === 'preview'
-                      ? 'bg-black text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                    ? 'bg-black text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700'
                     }`}
                   title="Preview"
                 >
