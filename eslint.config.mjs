@@ -18,10 +18,6 @@ const eslintConfig = [
       "react-hooks/exhaustive-deps": "warn",
       "react/no-unescaped-entities": "off",
       "prefer-const": "warn",
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/restrict-plus-operands": "off",
-      "@ts-ignore": "off",
     },
   },
 ];
